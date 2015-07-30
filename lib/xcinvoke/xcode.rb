@@ -86,9 +86,11 @@ module XCInvoke
 
     def as_env
       {
-        'DEVELOPER_DIR' => developer_dir.to_path,
-        'DYLD_FRAMEWORK_PATH' => dyld_framework_path.to_path,
-        'DYLD_LIBRARY_PATH' => dyld_library_path.to_path,
+        'DEVELOPER_DIR' => ENV['DEVELOPER_DIR'],
+        'DYLD_FRAMEWORK_PATH' =>
+          unshift_path(ENV['DYLD_FRAMEWORK_PATH'], dyld_framework_path.to_path),
+        'DYLD_LIBRARY_PATH' =>
+          unshift_path(ENV['DYLD_LIBRARY_PATH'], dyld_library_path.to_path),
       }
     end
 
@@ -112,6 +114,12 @@ module XCInvoke
       swift_info_regex = /Swift version ([\d\.]+) \(swift(?:lang)?-([\d\.]+)/i
       return unless xcrun(%w(swift --version)) =~ swift_info_regex
       [Regexp.last_match(1), Regexp.last_match(2)]
+    end
+
+    def unshift_path(paths, path)
+      paths = (paths || '').split(File::PATH_SEPARATOR)
+      paths.unshift(path)
+      paths.join(File::PATH_SEPARATOR)
     end
   end
 end
