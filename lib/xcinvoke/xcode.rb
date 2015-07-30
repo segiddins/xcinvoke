@@ -49,12 +49,12 @@ module XCInvoke
     end
 
     def self.find_swift_version(swift_version)
-      select { |xc| xc.swift_version == swift_version }.sort.last
+      select { |xc| xc.swift_version == Gem::Version.new(swift_version) }.sort.last
     end
 
     def swift_version
       info = swift_info
-      info.first if info
+      Gem::Version.new(info.first) if info
     end
 
     def build_number
