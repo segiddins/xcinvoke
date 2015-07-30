@@ -63,7 +63,8 @@ module XCInvoke
     end
 
     def version
-      Liferaft::Version.new(build_number)
+      build = build_number
+      Liferaft::Version.new(build) if build
     end
 
     def <=>(other)
