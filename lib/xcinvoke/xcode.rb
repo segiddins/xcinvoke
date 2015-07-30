@@ -70,11 +70,17 @@ module XCInvoke
       version <=> other.version
     end
 
-    def xcrun(cmd, env: {})
+    def xcrun(cmd, env: {}, err: false)
       env = env.merge(as_env)
       cmd = %w(xcrun) + cmd
-      output, = Open3.capture2(env, *cmd, err: '/dev/null')
-      output
+      case err
+      when :merge
+        oe, = Open3.capture2e(env, *cmd)
+        oe
+      else
+        o, e, = Open3.capture3(env, *cmd)
+        err ? [o, e] : o
+      end
     end
 
     def as_env
