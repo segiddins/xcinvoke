@@ -44,7 +44,9 @@ module XCInvoke
       xcodes.each(&blk)
     end
 
-    alias_method :all, :to_a
+    def self.all
+      to_a
+    end
 
     def self.find_swift_version(swift_version)
       select { |xc| xc.swift_version == swift_version }.sort.last
