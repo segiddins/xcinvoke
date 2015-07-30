@@ -50,20 +50,9 @@ module XCInvoke
       select { |xc| xc.swift_version == swift_version }.sort.last
     end
 
-    def swift_info
-      swift_info_regex = /Swift version ([\d\.]+) \(swift(?:lang)?-([\d\.]+)/i
-      return unless xcrun(%w(swift --version)) =~ swift_info_regex
-      [Regexp.last_match(1), Regexp.last_match(2)]
-    end
-
     def swift_version
       info = swift_info
       info.first if info
-    end
-
-    def xcodebuild_info
-      return unless xcrun(%w(xcodebuild -version)) =~ /\AXcode (.*?)\s*Build version (.*?)\s*\Z/i
-      [Regexp.last_match(1), Regexp.last_match(2)]
     end
 
     def build_number
@@ -100,6 +89,20 @@ module XCInvoke
 
     def dyld_library_path
       developer_dir + 'Toolchains/XcodeDefault.xctoolchain/usr/lib'
+    end
+
+    private
+
+    def xcodebuild_info
+      xcodebuild_info_regex = /\AXcode (.*?)\s*Build version (.*?)\s*\Z/i
+      return unless xcrun(%w(xcodebuild -version)) =~ xcodebuild_info_regex
+      [Regexp.last_match(1), Regexp.last_match(2)]
+    end
+
+    def swift_info
+      swift_info_regex = /Swift version ([\d\.]+) \(swift(?:lang)?-([\d\.]+)/i
+      return unless xcrun(%w(swift --version)) =~ swift_info_regex
+      [Regexp.last_match(1), Regexp.last_match(2)]
     end
   end
 end
