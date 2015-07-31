@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    xcinvoke (0.1.0)
+    xcinvoke (0.2.0)
       liferaft (~> 0.0.4)
 
 GEM

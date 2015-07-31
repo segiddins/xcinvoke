@@ -1,3 +1,17 @@
+## 0.2.0
+
+##### Enhancements
+
+* Return `Xcode#swift_version` as a `Version` object.  
+  [Samuel Giddins](https://github.com/segiddins)
+
+##### Bug Fixes
+
+* The entirety of `DYLD_FRAMEWORK_PATH` and `DYLD_LIBRARY_PATH` are no longer
+  overwritten in the generated Xcode environment.  
+  [Samuel Giddins](https://github.com/segiddins)
+
+
 ## 0.1.0
 
 ##### Enhancements
