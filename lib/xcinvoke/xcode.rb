@@ -49,7 +49,8 @@ module XCInvoke
     end
 
     def self.find_swift_version(swift_version)
-      select { |xc| xc.swift_version == Gem::Version.new(swift_version) }.sort.last
+      swift_version = Gem::Version.create(swift_version)
+      select { |xc| xc.swift_version == swift_version }.sort.last
     end
 
     def swift_version
@@ -86,11 +87,11 @@ module XCInvoke
 
     def as_env
       {
-        'DEVELOPER_DIR' => ENV['DEVELOPER_DIR'],
+        'DEVELOPER_DIR' => developer_dir.to_path,
         'DYLD_FRAMEWORK_PATH' =>
-          unshift_path(ENV['DYLD_FRAMEWORK_PATH'], dyld_framework_path.to_path),
+          unshift_path(ENV['DYLD_FRAMEWORK_PATH'], dyld_framework_path),
         'DYLD_LIBRARY_PATH' =>
-          unshift_path(ENV['DYLD_LIBRARY_PATH'], dyld_library_path.to_path),
+          unshift_path(ENV['DYLD_LIBRARY_PATH'], dyld_library_path),
       }
     end
 
@@ -118,7 +119,7 @@ module XCInvoke
 
     def unshift_path(paths, path)
       paths = (paths || '').split(File::PATH_SEPARATOR)
-      paths.unshift(path)
+      paths.unshift(path.to_s)
       paths.join(File::PATH_SEPARATOR)
     end
   end
