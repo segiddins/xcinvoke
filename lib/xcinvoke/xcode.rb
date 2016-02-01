@@ -74,7 +74,8 @@ module XCInvoke
 
     def xcrun(cmd, env: {}, err: false)
       env = env.merge(as_env)
-      cmd = %w(xcrun) + cmd
+      @xcrun_path ||= Open3.capture2(env, 'xcrun', '-f', 'xcrun').first.strip
+      cmd = [@xcrun_path] + cmd
       case err
       when :merge
         oe, = Open3.capture2e(env, *cmd)
