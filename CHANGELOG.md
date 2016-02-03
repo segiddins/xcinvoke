@@ -1,3 +1,13 @@
+## Master
+
+##### Bug Fixes
+
+* Ensure that `xcrun` is invoked with the full path, avoiding hanging when
+  Xcode 4.3.x is installed.  
+  [Samuel Giddins](https://github.com/segiddins)
+  [#3](https://github.com/segiddins/xcinvoke/issues/3)
+
+
 ## 0.2.0
 
 ##### Enhancements
