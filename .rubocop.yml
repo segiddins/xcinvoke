@@ -3,6 +3,10 @@ AllCops:
     - ./Rakefile
     - ./Gemfile
     - ./*.gemspec
+  Exclude:
+    - ./spec/fixtures/**/*
+    - ./vendor/bundle/**/*
+    - ./tmp/**/*
 
 # At the moment not ready to be used
 # https://github.com/bbatsov/rubocop/issues/947
@@ -11,12 +15,8 @@ Documentation:
 
 #- XCInvoke -----------------------------------------------------------------#
 
-Metrics/LineLength:
-  Max: 100
-
-# 20 lines is more reasonable than rubocop's default of 10
-Metrics/MethodLength:
-  Max: 20
+ParameterLists:
+  CountKeywordArgs: false
 
 # We adopted raise instead of fail.
 SignalException:
@@ -44,16 +44,70 @@ Encoding:
 
 # Having these make it easier to *not* forget to add one when adding a new
 # value and you can simply copy the previous line.
-TrailingComma:
+Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
 
-Style/SpecialGlobalVars:
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+# Clashes with CLAide Command#validate!
+GuardClause:
+  Enabled: false
+
+# Not always desirable: lib/claide/command/plugins_helper.rb:12:15
+Next:
+  Enabled: false
+
+# Autocorrect makes this cop much more useful, taking away needless guessing
+Lint/EndAlignment:
+  AutoCorrect: true
+
+
+# Arbitrary max lengths for classes simply do not work and enabling this will
+# lead to a never ending stream of annoyance and changes.
+Metrics/ClassLength:
+  Enabled: false
+
+# Arbitrary max lengths for modules simply do not work and enabling this will
+# lead to a never ending stream of annoyance and changes.
+Metrics/ModuleLength:
+  Enabled: false
+
+# Arbitrary max lengths for methods simply do not work and enabling this will
+# lead to a never ending stream of annoyance and changes.
+Metrics/MethodLength:
+  Enabled: false
+
+# No enforced convention here.
+Metrics/BlockNesting:
+  Enabled: false
+
+# It will be obvious which code is complex, Rubocop should only lint simple
+# rules for us.
+Metrics/AbcSize:
+  Enabled: false
+
+# It will be obvious which code is complex, Rubocop should only lint simple
+# rules for us.
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+# It will be obvious which code is complex, Rubocop should only lint simple
+# rules for us.
+Metrics/PerceivedComplexity:
   Enabled: false
 
 #- XCInvoke specs -----------------------------------------------------------#
 
 # Allow for `should.match /regexp/`.
 AmbiguousRegexpLiteral:
+  Exclude:
+    - spec/**/*
+
+Performance/RedundantMatch:
   Exclude:
     - spec/**/*
 
