@@ -75,8 +75,14 @@ module XCInvoke
     def xcrun(cmd, env: {}, err: false)
       env = env.merge(as_env)
 
-      # explicitly dont use the env when computing the full path to xcrun
-      @xcrun_path ||= Open3.capture2('xcrun', '-f', 'xcrun').first.strip
+      # xcrun self-lookup is a workaround for issues caused by having
+      # multiple very old versions of Xcode installed
+      # (see https://github.com/segiddins/xcinvoke/issues/3)
+      @xcrun_path ||= Open3.capture3('xcrun', '-f', 'xcrun').first.strip
+
+      # Env-based lookup is necessary for Xcode ≥8
+      @xcrun_path = 'xcrun' if @xcrun_path == ''
+
       cmd = [@xcrun_path] + cmd
       case err
       when :merge
