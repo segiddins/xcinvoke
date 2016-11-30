@@ -1,22 +1,6 @@
 require 'liferaft'
 require 'open3'
 
-module Liferaft
-  class Version
-    unless instance_methods.include?(:other)
-      def <=>(other)
-        if self == other
-          0
-        elsif self < other
-          -1
-        else
-          1
-        end
-      end
-    end
-  end
-end
-
 module XCInvoke
   class Xcode
     extend Enumerable
