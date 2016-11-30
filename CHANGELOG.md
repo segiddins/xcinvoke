@@ -1,3 +1,12 @@
+## 0.3.0
+
+##### Enhancements
+
+* Support for Xcode 8.  
+  [Paul Cantrell](https://github.com/pcantrell)
+  [#6](https://github.com/segiddins/xcinvoke/issues/6)
+
+
 ## 0.2.1
 
 ##### Bug Fixes

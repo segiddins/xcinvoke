@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  sped.required_ruby_version = '>= 2.0.0'
+  spec.required_ruby_version = '>= 2.0.0'
 
   spec.add_runtime_dependency 'liferaft', '~> 0.0.6'
 
