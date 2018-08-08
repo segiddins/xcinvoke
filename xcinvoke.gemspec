@@ -11,6 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Manage Xcode versions with ease!'
   spec.homepage      = 'https://github.com/segiddins/xcinvoke'
+  spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = 'exe'
